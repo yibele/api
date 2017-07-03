@@ -30,7 +30,7 @@ $di->setShared(
             [
                 'host' => '127.0.0.1',
                 'username'=>'root',
-                'password'=> '',
+                'password'=> 'wo19540424',
                 'dbname'=>'test',
                 'charset'=>'utf8'
             ]

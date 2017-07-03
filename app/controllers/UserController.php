@@ -25,12 +25,14 @@ class UserController extends ControllerBase
 
         $post = $this->request->getPost();
 
+        /**
         $user->nickName = $post['nickName'];
         $user->avatarUrl = $post['avatarUrl'];
         $user->gender = $post['gender'];
         $user->phone = $post['phone'];
+         */
 
-        if($user->save() ===false) {
+        if($user->save($post) ===false) {
             $msg = [
                 'code'=> 40003,
                 'msg' => '创建数据失败'
@@ -41,6 +43,9 @@ class UserController extends ControllerBase
         } else {
             $msg = [
                 'code'=> 10001,
+                'data' => [
+                    'uid' => "$user->user_id"
+                ],
                 'msg'=> '创建用户成功'
             ];
             $this->response->setStatusCode(200,'ok');
@@ -89,7 +94,7 @@ class UserController extends ControllerBase
                 'msg'=> '用户名不存在'
             ];
 
-            $this->response->setStatusCode(200,'ok');
+            $this->response->setStatusCode(405,'nickName dose not exits');
             $this->response->setJsonContent($msg);
             $this->response->send();
 
