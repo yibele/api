@@ -11,11 +11,28 @@
  Target Server Version : 50505
  File Encoding         : utf-8
 
- Date: 07/03/2017 19:18:54 PM
+ Date: 07/04/2017 12:43:00 PM
 */
 
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+--  Table structure for `act_tag`
+-- ----------------------------
+DROP TABLE IF EXISTS `act_tag`;
+CREATE TABLE `act_tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tag_name` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Records of `act_tag`
+-- ----------------------------
+BEGIN;
+INSERT INTO `act_tag` VALUES ('1', '电影 & 话剧'), ('2', '游戏 & 桌游'), ('3', '派对 & 夜店'), ('4', '户外 & 活动'), ('5', '运动 & 健身');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `activity`
@@ -26,6 +43,7 @@ CREATE TABLE `activity` (
   `act_name` varchar(45) DEFAULT NULL COMMENT '				',
   `act_tag` varchar(32) DEFAULT NULL,
   `act_comment` varchar(255) DEFAULT NULL,
+  `act_img` varchar(64) DEFAULT NULL,
   `act_time` datetime DEFAULT NULL,
   `act_left_user` int(11) DEFAULT NULL,
   `act_need_user` int(11) DEFAULT NULL,
@@ -42,24 +60,7 @@ CREATE TABLE `activity` (
 --  Records of `activity`
 -- ----------------------------
 BEGIN;
-INSERT INTO `activity` VALUES ('1', '周日狼人杀走起！', '1', '【我们这样玩狼人杀】周日北二狼人杀走起！', '2017-07-01 19:00:00', '11', '12', '1', '1', '0', '2017-06-29 21:00:00', '首都师范大学北二校区 503室', 'yibele'), ('2', '周日狼人杀走起！', '2', '【我们这样玩狼人杀】周日北二狼人杀走起！', '2017-07-01 19:00:00', '11', '12', '1', '1', '0', '2017-06-29 21:00:00', '首都师范大学北二校区 503室', 'yibele'), ('3', '周日狼人杀走起！', '3', '【我们这样玩狼人杀】周日北二狼人杀走起！', '2017-07-01 19:00:00', '11', '12', '1', '1', '0', '2017-06-29 21:00:00', '首都师范大学北二校区 503室', 'yibele'), ('4', '周五狂欢，三里屯酒吧走起！', '3', '寂寞的周五还要待在宿舍王者农药吗？一起来三里屯high起来！', '2017-07-01 23:00:00', '11', '12', '1', '1', '0', '2017-07-01 19:00:00', '北京市三里屯coco酒吧', 'na'), ('5', '周五狂欢，三里屯酒吧走起！', '3', '寂寞的周五还要待在宿舍王者农药吗？一起来三里屯high起来！', '2017-07-01 23:00:00', '11', '12', '1', '1', '0', '2017-07-01 19:00:00', '北京市三里屯coco酒吧', 'naa');
-COMMIT;
-
--- ----------------------------
---  Table structure for `tag`
--- ----------------------------
-DROP TABLE IF EXISTS `tag`;
-CREATE TABLE `tag` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `tag_name` varchar(32) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-
--- ----------------------------
---  Records of `tag`
--- ----------------------------
-BEGIN;
-INSERT INTO `tag` VALUES ('1', 'movie'), ('2', 'games'), ('3', 'club'), ('4', 'outdoor'), ('5', 'sports');
+INSERT INTO `activity` VALUES ('1', '周日狼人杀走起！', '1', '【我们这样玩狼人杀】周日北二狼人杀走起！', 'http://172.19.208.253/xyp/img/act1.png', '2017-07-01 19:00:00', '11', '12', '1', '1', '0', '2017-06-29 21:00:00', '首都师范大学北二校区 503室', 'yibele'), ('2', '周日狼人杀走起！', '2', '【我们这样玩狼人杀】周日北二狼人杀走起！', 'http://172.19.208.253/xyp/img/act1.png', '2017-07-01 19:00:00', '11', '12', '1', '1', '0', '2017-06-29 21:00:00', '首都师范大学北二校区 503室', 'yibele'), ('3', '周日狼人杀走起！', '3', '【我们这样玩狼人杀】周日北二狼人杀走起！', 'http://172.19.208.253/xyp/img/act1.png', '2017-07-01 19:00:00', '11', '12', '1', '1', '0', '2017-06-29 21:00:00', '首都师范大学北二校区 503室', 'yibele'), ('4', '周五狂欢，三里屯酒吧走起！', '3', '寂寞的周五还要待在宿舍王者农药吗？一起来三里屯high起来！', 'http://172.19.208.253/xyp/img/act1.png', '2017-07-01 23:00:00', '11', '12', '1', '1', '0', '2017-07-01 19:00:00', '北京市三里屯coco酒吧', 'na'), ('5', '周五狂欢，三里屯酒吧走起！', '3', '寂寞的周五还要待在宿舍王者农药吗？一起来三里屯high起来！', 'http://172.19.208.253/xyp/img/act1.png', '2017-07-01 23:00:00', '11', '12', '1', '1', '0', '2017-07-01 19:00:00', '北京市三里屯coco酒吧', 'naa');
 COMMIT;
 
 -- ----------------------------
@@ -72,14 +73,16 @@ CREATE TABLE `user` (
   `avatarUrl` varchar(128) DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL,
   `gender` int(11) DEFAULT NULL,
-  PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`user_id`),
+  KEY `user_id` (`user_id`) USING BTREE,
+  KEY `nickName` (`nickName`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Records of `user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES ('1', 'yibele', null, null, null), ('2', 'nahia', null, null, null), ('3', 'xiaoyao', null, null, null), ('4', 'zhuna', null, null, null), ('5', 'pingzi', null, null, null), ('8', '伊布格勒', 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqcXWBAsibvRl9pcLGiabibQfA7aq3Q6Dic3f0OPZyONqxgZFznHUrTOo3iccDDcuybwJphrj6Qaq8URJg/0', '18610597754', '1');
+INSERT INTO `user` VALUES ('2', 'nahia', null, null, null), ('3', 'xiaoyao', null, null, null), ('4', 'zhuna', null, null, null), ('5', 'pingzi', null, null, null), ('1', 'yibele', 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqcXWBAsibvRl9pcLGiabibQfA7aq3Q6Dic3f0OPZyONqxgZFznHUrTOo3iccDDcuybwJphrj6Qaq8URJg/0', '', '1');
 COMMIT;
 
 -- ----------------------------
@@ -92,13 +95,13 @@ CREATE TABLE `user_act` (
   `act_id` int(11) NOT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Records of `user_act`
 -- ----------------------------
 BEGIN;
-INSERT INTO `user_act` VALUES ('1', '1', '1', null), ('2', '1', '2', null), ('3', '2', '1', null), ('4', '2', '3', null), ('5', '3', '3', null);
+INSERT INTO `user_act` VALUES ('1', '1', '1', null), ('2', '1', '2', null), ('3', '2', '1', null), ('4', '2', '3', null), ('5', '3', '3', null), ('6', '12', '1', null);
 COMMIT;
 
 -- ----------------------------
