@@ -51,11 +51,16 @@ class ActivityController extends ControllerBase
     //获取首页活动信息
     public function getIndexAct()
     {
-        $di = $this->getDi();
-        $db = $di['db'];
-        $arr = array();
         $res = Activity::getIndexAct(5, null);
-        $this->_msg(200,10004,'获取首页活动成功',$res);
+        $this->_msg(200, 10004, '获取首页活动成功', $res);
+    }
 
+    /**
+     * 获取活动分类信息
+     */
+    public function getCate()
+    {
+        $ActTag = ActTag::query()->execute();
+        $this->_msg(200,10005,'获取分类信息成功',$ActTag);
     }
 }

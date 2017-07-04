@@ -90,6 +90,15 @@ $app->get(
     ]
 );
 
+//获取活动分类信息
+$app->get(
+    '/v1/activity/cate',
+    [
+        $act,
+        'getCate'
+    ]
+);
+
 //notFound 页面情况
 $app->notFound(
     function () use ($app){
