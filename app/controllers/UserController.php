@@ -77,7 +77,7 @@ class UserController extends ControllerBase
                 'code'=> 200,
                 'data'=> [
                     'user' => $user->toArray(),
-                    'act' => json_encode($activity),
+                    'act' => $activity,
                     'actCount' => count($activity)
                 ],
                 'msg'=>'success'

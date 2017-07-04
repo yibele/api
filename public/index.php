@@ -70,7 +70,10 @@ $app->get(
     ]
 );
 
-//活动路由
+/**
+ * 活动路由
+ */
+// 创建活动
 $app->post(
     '/v1/activity',
     [
@@ -78,7 +81,14 @@ $app->post(
         'create'
     ]
 );
-
+//获取首页活动
+$app->get(
+    '/v1/activity/index',
+    [
+        $act,
+        'getIndexAct'
+    ]
+);
 
 //notFound 页面情况
 $app->notFound(

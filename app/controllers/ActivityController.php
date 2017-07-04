@@ -47,4 +47,15 @@ class ActivityController extends ControllerBase
             };
         }
     }
+
+    //获取首页活动信息
+    public function getIndexAct()
+    {
+        $di = $this->getDi();
+        $db = $di['db'];
+        $arr = array();
+        $res = Activity::getIndexAct(5, null);
+        $this->_msg(200,10004,'获取首页活动成功',$res);
+
+    }
 }
