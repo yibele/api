@@ -61,6 +61,22 @@ class ActivityController extends ControllerBase
     public function getCate()
     {
         $ActTag = ActTag::query()->execute();
-        $this->_msg(200,10005,'获取分类信息成功',$ActTag);
+        $this->_msg(200, 10005, '获取分类信息成功', $ActTag);
+    }
+
+    /**
+     * 通过标签id 获取分类的活动
+     */
+
+    public function getCatDetail($id)
+    {
+        $acttags = ActTag::find($id);
+        $arr = array();
+        foreach($acttags as $v) {
+            $arr = $v->Activity->toArray();
+            $arr['tag_name'] = $v->tag_name;
+        }
+
+        $this->_msg(200,10006,'获取分类详情成功',$arr);
     }
 }

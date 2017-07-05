@@ -99,6 +99,15 @@ $app->get(
     ]
 );
 
+//通过分类id获取分类活动
+$app->get(
+    '/v1/activity/cateDetail/{id}',
+    [
+        $act,
+        'getCatDetail'
+    ]
+);
+
 //notFound 页面情况
 $app->notFound(
     function () use ($app){
