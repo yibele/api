@@ -72,11 +72,41 @@ class ActivityController extends ControllerBase
     {
         $acttags = ActTag::find($id);
         $arr = array();
-        foreach($acttags as $v) {
+        foreach ($acttags as $v) {
             $arr = $v->Activity->toArray();
             $arr['tag_name'] = $v->tag_name;
         }
 
-        $this->_msg(200,10006,'获取分类详情成功',$arr);
+        $this->_msg(200, 10006, '获取分类详情成功', $arr);
+    }
+
+    /**
+     * 通过id获取活动详情
+     */
+    public function show($id,$uid)
+    {
+        $act = Activity::findFirst(
+            [
+                "id = $id"
+            ]
+        );
+        $userAct = $act->UserAct;
+        $act = $act->toArray();
+        $user = array();
+        foreach($userAct as $v) {
+            $user[] = $v->User->toArray();
+        }
+        $data = [
+            'user' => $user,
+            'act' => $act
+        ];
+        $data['tag'] = 0;
+        foreach ($user as $k=>$v){
+            if($v['user_id'] == $uid) {
+                $data['tag'] = 1;
+                break;
+            }
+        }
+        $this->_msg(200,10007,'获取活动详情成功' ,$data);
     }
 }

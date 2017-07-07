@@ -44,7 +44,7 @@ class UserController extends ControllerBase
             $msg = [
                 'code'=> 10001,
                 'data' => [
-                    'uid' => "$user->user_id"
+                    'uid' => "$user"
                 ],
                 'msg'=> '创建用户成功'
             ];

@@ -53,7 +53,7 @@ $app->get(
 
 //创建用户
 $app->post(
-    '/v1/user',
+    '/v1/user/create',
     [
         $user,
         'create'
@@ -105,6 +105,15 @@ $app->get(
     [
         $act,
         'getCatDetail'
+    ]
+);
+
+//获取活动详情
+$app->get(
+    '/v1/activity/show/{id}/user/{uid}',
+    [
+        $act,
+        'show'
     ]
 );
 
