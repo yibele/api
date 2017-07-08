@@ -26,15 +26,15 @@ class UserController extends ControllerBase
         $post = $this->request->getPost();
 
         /**
-        $user->nickName = $post['nickName'];
-        $user->avatarUrl = $post['avatarUrl'];
-        $user->gender = $post['gender'];
-        $user->phone = $post['phone'];
+         * $user->nickName = $post['nickName'];
+         * $user->avatarUrl = $post['avatarUrl'];
+         * $user->gender = $post['gender'];
+         * $user->phone = $post['phone'];
          */
 
-        if($user->save($post) ===false) {
+        if ($user->save($post) === false) {
             $msg = [
-                'code'=> 40003,
+                'code' => 40003,
                 'msg' => '创建数据失败'
             ];
             $this->response->setStatusCode(504);
@@ -42,13 +42,13 @@ class UserController extends ControllerBase
             $this->response->send();
         } else {
             $msg = [
-                'code'=> 10001,
+                'code' => 10001,
                 'data' => [
                     'uid' => "$user"
                 ],
-                'msg'=> '创建用户成功'
+                'msg' => '创建用户成功'
             ];
-            $this->response->setStatusCode(200,'ok');
+            $this->response->setStatusCode(200, 'ok');
             $this->response->setJsonContent($msg);
             $this->response->send();
         }
@@ -74,16 +74,16 @@ class UserController extends ControllerBase
             $this->_user = $user;
 
             $msg = [
-                'code'=> 200,
-                'data'=> [
+                'code' => 200,
+                'data' => [
                     'user' => $user->toArray(),
                     'act' => $activity,
                     'actCount' => count($activity)
                 ],
-                'msg'=>'success'
+                'msg' => 'success'
             ];
 
-            $this->response->setStatusCode(200,'ok');
+            $this->response->setStatusCode(200, 'ok');
             $this->response->setJsonContent($msg);
             $this->response->send();
 
@@ -91,27 +91,13 @@ class UserController extends ControllerBase
 
             $msg = [
                 'code' => 40001,
-                'msg'=> '用户名不存在'
+                'msg' => '用户名不存在'
             ];
 
-            $this->response->setStatusCode(405,'nickName dose not exits');
+            $this->response->setStatusCode(405, 'nickName dose not exits');
             $this->response->setJsonContent($msg);
             $this->response->send();
 
-        }
-    }
-
-    public function userAddAct($userId,$actId){
-        $UserAct = new UserAct();
-        $count = $UserAct::find("user_id = '".$userId."'");
-        $count = count($count);
-        if($count <=2) {
-            $UserAct->act_id = $actId;
-            $UserAct->user_id = $userId;
-            $UserAct->save();
-            $this->_msg(10003,'参加活动成功');
-        } else {
-            $this->_msg(40004,'用户最多只可参加两个活动');
         }
     }
 }

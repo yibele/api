@@ -7,6 +7,7 @@
  * Time: 下午1:04
  */
 use Phalcon\Mvc\Model;
+
 class UserAct extends Model
 {
     public $id;

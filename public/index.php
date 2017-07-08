@@ -9,8 +9,8 @@ define('APP_PATH', BASE_PATH . '/app');
 $loader = new Phalcon\Loader();
 $loader->registerDirs(
     [
-        APP_PATH.'/controllers',
-        APP_PATH.'/models'
+        APP_PATH . '/controllers',
+        APP_PATH . '/models'
     ]
 );
 $loader->register();
@@ -29,10 +29,10 @@ $di->setShared(
         return new Phalcon\Db\Adapter\Pdo\Mysql(
             [
                 'host' => '127.0.0.1',
-                'username'=>'root',
-                'password'=> 'wo19540424',
-                'dbname'=>'test',
-                'charset'=>'utf8'
+                'username' => 'root',
+                'password' => 'wo19540424',
+                'dbname' => 'test',
+                'charset' => 'utf8'
             ]
         );
     }
@@ -117,15 +117,32 @@ $app->get(
     ]
 );
 
+//用户添加活动
+$app->post(
+    '/v1/activity/userAddAct',
+    [
+        $act,
+        'userAddAct'
+    ]
+);
+//用户删除活动
+$app->post(
+    '/v1/activity/userDelAct',
+    [
+        $act,
+        'userDelAct'
+    ]
+);
+
 //notFound 页面情况
 $app->notFound(
-    function () use ($app){
+    function () use ($app) {
         $resource = $app->request->getURI();
         $msg = [
             'code' => '50001',
-            'msg' => '路由错误 : '.$resource
+            'msg' => '路由错误 : ' . $resource
         ];
-        $app->response->setStatusCode(404,'Not Found');
+        $app->response->setStatusCode(404, 'Not Found');
         $app->response->setJsonContent($msg);
         $app->response->send();
     }

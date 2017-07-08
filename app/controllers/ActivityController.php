@@ -83,7 +83,7 @@ class ActivityController extends ControllerBase
     /**
      * 通过id获取活动详情
      */
-    public function show($id,$uid)
+    public function show($id, $uid)
     {
         $act = Activity::findFirst(
             [
@@ -93,7 +93,7 @@ class ActivityController extends ControllerBase
         $userAct = $act->UserAct;
         $act = $act->toArray();
         $user = array();
-        foreach($userAct as $v) {
+        foreach ($userAct as $v) {
             $user[] = $v->User->toArray();
         }
         $data = [
@@ -101,12 +101,56 @@ class ActivityController extends ControllerBase
             'act' => $act
         ];
         $data['tag'] = 0;
-        foreach ($user as $k=>$v){
-            if($v['user_id'] == $uid) {
+        foreach ($user as $k => $v) {
+            if ($v['user_id'] == $uid) {
                 $data['tag'] = 1;
                 break;
             }
         }
-        $this->_msg(200,10007,'获取活动详情成功' ,$data);
+        $this->_msg(200, 10007, '获取活动详情成功', $data);
+    }
+
+    /**
+     * 用户添加活动
+     */
+
+    public function userAddAct()
+    {
+        $post = $this->request->getPost();
+        $userAct = new UserAct();
+        //获取用户参加的活动个数，如果大于二，就报错
+        $count = $userAct::count(
+            [
+                "user_id =" . $post['user_id']
+            ]
+        );
+        if ($count < 2) {
+            $res = $userAct->save($post);
+            if ($res) {
+                $data = null;
+                $this->_msg(200, 10008, '用户添加活动成功', $data);
+            } else {
+                $this->_msg(504, 40004, '用户添加活动失败', '');
+            }
+        } else {
+            $this->_msg(504, 40005, '用户活动限制在两个', '');
+        }
+    }
+
+    public function userDelAct()
+    {
+        $post = $this->request->getPost();
+        $useract = UserAct::findFirst([
+            "user_id=" . $post['user_id'],
+            "act_id=" . $post['act_id']
+        ]);
+        if ($useract->delete() === false) {
+            $messages = $useract->getMessages();
+            foreach($messages as $message) {
+                echo $message,"\n";
+            }
+        } else {
+            $this->_msg(200,10009,'用户删除活动成功');
+        }
     }
 }
