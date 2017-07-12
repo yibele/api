@@ -1,6 +1,7 @@
 <?php
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\Micro;
+use Phalcon\Mvc\View\Engine\Volt;
 
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/app');
@@ -40,6 +41,45 @@ $di->setShared(
 
 //路由
 $app = new Micro($di);
+
+$app['view'] = function () {
+    $view = new Phalcon\Mvc\View\Simple();
+
+    $view->setViewsDir('../app/views/');
+
+    $view->registerEngines(array(
+        '.volt' => function($view, $di) {
+            $volt = new Volt($view, $di);
+            $volt->setOptions(
+                array(
+                    'compiledPath'      => __DIR__ . '/../cache/volt/',
+                    'compiledExtension' => '.php',
+                    'compiledSeparator' => '_',
+                    'compileAlways'     => true
+                )
+            );
+            return $volt;
+        }
+    ));
+
+
+    return $view;
+};
+
+$app->get(
+    '/',
+    function () use ($app) {
+        echo $app['view']->render(
+            "index/index",
+            [
+                "brand_title" => " LEMENTARY DESIGN",
+                "title" => "首页",
+                "brand_title_cn"=>"欢迎来到校园湃",
+                "brand_content"=> "中国唯一一个服务报销社团活动的专业网站 -- 发布活动 来校园湃"
+            ]
+        );
+    }
+);
 
 //用户路由
 //通过用户名获取用户信息和用户参加的活动信息
@@ -149,6 +189,3 @@ $app->notFound(
 );
 
 $app->handle();
-
-
-

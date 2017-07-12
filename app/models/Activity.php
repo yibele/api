@@ -69,11 +69,11 @@ class Activity extends Model
         $res[3]['tag_name'] = "派对 & 夜店";
         $res[4]['tag_name'] = "户外 & 活动";
         $res[5]['tag_name'] = "运动 & 健身";
-        $res[1]['id'] = "电影 & 话剧";
-        $res[2]['id'] = "游戏 & 桌游";
-        $res[3]['id'] = "派对 & 夜店";
-        $res[4]['id'] = "户外 & 活动";
-        $res[5]['id'] = "运动 & 健身";
+        $res[1]['id'] = 1;
+        $res[2]['id'] = 2;
+        $res[3]['id'] = 3;
+        $res[4]['id'] = 4;
+        $res[5]['id'] = 5;
         return $res;
     }
 }
