@@ -34,6 +34,9 @@
                 <li><a href="#">ABOUT</a></li>
                 <li><a href="#">CONTACT US</a></li>
                 <button class="btn btn-default"
+                        type="button"
+                        data-toggle="modal"
+                        data-target="#login"
                         style="display:inline-block;margin-top:8px;padding-left:40px;padding-right:40px;margin-left:10px;margin-right:20px;padding-top:5px;padding-bottom: 5px;">
                     登陆
                 </button>
@@ -51,9 +54,30 @@
             {{brand_content}}
         </div>
         <div class="brand-button">
-            <button class="btn btn-default">登陆了解详情</button>
+            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#login" >登陆了解详情</button>
         </div>
     </div>
+    <!-- 模态框 -->
+    <div class="modal fade" style="margin-top:15%;" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">用户登陆</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="login" method="post">
+                        <input type="text" name="username" required class="form-control spacing-btn" placeholder="username">
+                        <input type="text" name="password" required class="form-control spacing-btn" placeholder="password">
+                        <input type="submit" value="登陆" class="btn btn-success spacing-btn" >
+                        <input type="submit" value="注册" class="btn btn-danger spacing-btn">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 </body>
 </html>
